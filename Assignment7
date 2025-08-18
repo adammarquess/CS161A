@@ -1,0 +1,191 @@
+// ------------- FILE HEADER -------------
+// Author: Adam Marquess
+// Assignment: #7
+// Date: 8 / 18 / 25
+// Description:Grade calculator
+// Sources: 
+
+
+// ------------- ZYBOOKS SCORES -------------
+// https://learn.zybooks.com/zybook/PCCCS161ASummer25
+// Chapter: 7
+// Participation: 92%
+// Challenge: 92%
+// Labs: 100%
+
+
+// ------------- DISCORD POSTS -------------
+// https://discord.com/invite/URYKKf8YHm
+// Count:
+// Links (Optional): 
+
+
+// ------------- DESIGN DOCUMENT -------------
+// A. INPUT [yes/no]: y
+// B. OUTPUT [yes/no]: y
+// C. CALCULATIONS [yes/no]:y
+// D. LOGIC and ALGORITHMS [yes/no]:y
+//    (Optional) flow chart link or file name: 
+
+
+// ------------- TESTING -------------
+// PASS ALL GIVEN SAMPLE RUN TESTS [yes/no]: y
+// (Optional) Additional tests count:   
+
+
+// ------------- CODE -------------
+#include <iostream>
+#include <iomanip>
+#include <limits>
+#include <string>
+using namespace std;
+
+
+const double ASSIGN_WEIGHT = 0.6;
+const double MIDTERM_WEIGHT = 0.2;
+const double FINAL_WEIGHT = 0.2;
+
+// prototypes 
+void welcome();
+void Instructions();
+int readInt(string prompt, int min, int max);
+double readScore(string prompt);
+double assignAverage(int numAssigns);
+double calcFinalScore(double assignAvg, double midterm, double finalExam);
+char calcLetterGrade(double finalScore);
+
+
+void welcome() {
+    cout << "Welcome to my Final Grade Calculator!" << endl;
+}
+
+ void Instructions () {   cout << "Please enter the following information and I will calculate your Final Numerical Grade and Letter Grade for you!" << endl;
+    cout << "The number of assignments must be between 0 and 10." << endl;
+    cout << "All scores entered must be between 0 and 4." << endl;
+}
+
+
+int readInt(string prompt, int min, int max) {
+    int value;
+    while (true) {
+        cout << prompt;
+        cin >> value;
+
+        if (cin.fail() || value < min || value > max) {
+            cout << "Invalid input. Please enter an integer between " << min << " and " << max << "." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else {
+            return value;
+        }
+    }
+}
+
+double readScore(string prompt) {
+    double score;
+    while (true) {
+        cout << prompt;
+        cin >> score;
+
+        if (cin.fail() || score < 0.0 || score > 4.0) {
+            cout << "Invalid score. Please enter a value between 0 and 4." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else {
+            return score;
+        }
+    }
+}
+
+
+double assignAverage(int numAssigns) {
+    double total = 0.0;
+    for (int i = 1; i <= numAssigns; i++) {
+        double score = readScore("Enter score " + to_string(i) + ": ");
+        total += score;
+    }
+    return total / numAssigns;
+}
+
+double calcFinalScore(double assignAvg, double midterm, double finalExam) {
+    return (assignAvg * ASSIGN_WEIGHT) +
+           (midterm * MIDTERM_WEIGHT) +
+           (finalExam * FINAL_WEIGHT);
+}
+
+char calcLetterGrade(double finalScore) {
+    if (finalScore >= 3.3)
+        return 'A';
+    else if (finalScore >= 2.8)
+        return 'B';
+    else if (finalScore >= 2.0)
+        return 'C';
+    else if (finalScore >= 1.2)
+        return 'D';
+    else
+        return 'F';
+}
+
+int main() {
+    welcome();
+    Instructions();
+
+    int numAssignments = readInt("Enter the number of assignments (0 to 10): ", 0, 10);
+    double assignAvg = 0.0;
+    if (numAssignments > 0) {
+        assignAvg = assignAverage(numAssignments);
+    }
+
+    double midterm = readScore("Enter your midterm exam score: ");
+    double finalExam = readScore("Enter your final exam score: ");
+
+    double finalScore = calcFinalScore(assignAvg, midterm, finalExam);
+    char letterGrade = calcLetterGrade(finalScore);
+
+    cout << fixed << setprecision(1);
+    cout << "Your Final Numeric score is " << finalScore << endl;
+    cout << "Your Final Grade is " << letterGrade << endl;
+    cout << "Thank you for using my Grade Calculator!" << endl;
+
+    return 0;
+}
+
+
+// ------------- DESIGN -------------
+/* 
+Program Name:
+
+Program Description:
+
+Design:
+A. INPUT
+inputs: number of assignments (int)
+grade (double) 
+midterm(double) 
+final (double)
+
+
+B. OUTPUT
+outputs:
+final score (double) 
+letter grade ( char)
+
+
+C. CALCULATIONS
+Describe calculations used by algorithms in step D.  
+calculations
+
+average is ( total / numAssigns)
+final score is  (assignAvg * ASSIGN_WEIGHT) + (midterm * MIDTERM_WEIGHT) +(finalExam * FINAL_WEIGHT);
+
+D. LOGIC and ALGORITHMS
+Design the logic of your program using pseudocode or flowcharts. 
+Use conditionals, loops, functions or array constructs.
+List the steps in transforming inputs into outputs. 
+https://github.com/Glen-Sasek-PCC-Instructor/2025-06-22/blob/main/Pseudocode-Reference.txt
+
+
+SAMPLE RUNS
+Copy from assignment document.
+
+*/
