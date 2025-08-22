@@ -1,0 +1,323 @@
+// ------------- FILE HEADER -------------
+// Author: Adam Marquess
+// Assignment: 8 
+// Date: 8 /22/ 2025
+// Description: Grade calculator
+// Sources: 
+
+
+// ------------- ZYBOOKS SCORES -------------
+// https://learn.zybooks.com/zybook/PCCCS161ASummer25
+// Chapter: 8
+// Participation: 100%
+// Challenge: 100%
+// Labs: 100%
+
+
+// ------------- DISCORD POSTS -------------
+// https://discord.com/invite/URYKKf8YHm
+// Count:
+// Links (Optional): 
+
+
+// ------------- DESIGN DOCUMENT -------------
+// A. INPUT [yes/no]:  yes
+input assignments , midterm, and final 
+// B. OUTPUT [yes/no]: yes  final grade and letter grade
+// C. CALCULATIONS [yes/no]: average assignments , calculate letter grade 
+// D. LOGIC and ALGORITHMS [yes/no]:
+//    (Optional) flow chart link or file name: 
+
+
+// ------------- TESTING -------------
+// PASS ALL GIVEN SAMPLE RUN TESTS [yes/no]: yes
+// (Optional) Additional tests count:   
+
+
+// ------------- CODE -------------
+#include <bits/stdc++.h>
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <string>
+#include <limits>
+using namespace std;
+
+// constants 
+const double ASSIGN_WEIGHT = 0.60;
+const double EXAM_WEIGHT = 0.20;
+
+// prototypes
+void welcome();
+void instructions ();
+void goodbye ();
+
+int readInt(string prompt); 
+// This function should be used any time you read any integers from the user.
+//Use this function to read the number of Assignments from the user.
+
+void readScore(string prompt, double &num);
+//A function called void readScore(string prompt, double &num);
+//to read all the scores from the user. Any time you read a score you must call this function. 
+//The function must do data validation to make sure it is a numeric value, 
+//and that it is within the range of 0 to 4 inclusive.
+
+double assignAverage(int numAssigns);
+//A function called double assignAverage(int numAssigns); 
+//to read the Assignment scores from the user. 
+//This function must call readScore every time you read an Assignment score. 
+//You must use a for loop to do this. Then calculate and return the average score.
+
+void getInput(double &midtermScore, double &finalExamScore);  
+//A function called void getInput(double &midtermScore, double &finalExamScore); 
+//that calls the readScore() function and reads the 2 exam scores.
+
+double calcFinalScore(double assignAvg, double midterm, double final);
+//A function called double calcFinalScore(double assignAvg, double midterm, double final);
+//that takes the Assignment average score, the midterm score and the final exam score, 
+//and calculates the final numerical score based on the appropriate weights for assignments and exams. 
+//The assignments are weighted at 60%, the midterm and final exams are weighted at 20% each.
+
+void calcLetterGrade(double finalScore, char &letter);
+//A function called void calcLetterGrade(double finalScore, char &letter); 
+//that takes the finalScore by value and a character for the letter grade by reference.
+//Print the letter grade in main().
+
+
+
+
+int main() {
+    // Welcome and instructions
+    welcome();
+    instructions();
+
+    // Variables
+    int numOfAssignments = 0;
+    double averageAssignmentScore = 0.0;
+    double midterm = 0.0;
+    double finalExam = 0.0;
+    double finalScore = 0.0;
+    char grade;
+
+    // Read number of assignments
+    numOfAssignments = readInt("Enter the number of assignments (0 to 10): ");
+
+    // Read assignment scores and compute average
+    if (numOfAssignments > 0) {
+        averageAssignmentScore = assignAverage(numOfAssignments);
+    }
+cout << endl;
+    // Read midterm and final exam scores
+    getInput(midterm, finalExam);
+
+    // Compute final score
+    finalScore = calcFinalScore(averageAssignmentScore, midterm, finalExam);
+
+    // Determine letter grade
+    calcLetterGrade(finalScore, grade);
+
+    // Output results
+    cout << fixed << setprecision(1);
+    cout << "Your Final Numeric score is " << finalScore << endl;
+    cout << "Your Final Grade is " << grade << endl;
+
+    // Goodbye message
+    goodbye();
+
+    return 0;
+}
+
+// ==== Function Definitions ====
+
+void welcome() {
+    cout << "Welcome to my Final Grade Calculator!" << endl;
+}
+
+void instructions() {
+    cout << "Please enter the following information and I will calculate your Final Numerical Grade and Letter Grade for you!" << endl;
+    cout << "The number of assignments must be between 0 and 10." << endl;
+    cout << "All scores entered must be between 0 and 4." << endl;
+}
+
+void goodbye() {
+    cout << "Thank you for using my Grade Calculator!" << endl;
+}
+
+
+
+
+
+//implimnatation
+
+
+
+
+int readInt(string prompt) {
+    int value;
+    while (true) {
+        cout << prompt;
+        cin >> value;
+        if (!cin) {
+            cout << "Invalid input. Enter an integer between 0 and 10." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else if (value < 0 || value > 10) {
+            cout << "Value must be between 0 and 10." << endl;
+        } else {
+            return value;
+        }
+    }
+}
+
+void readScore(string prompt, double &num) {
+    while (true) {
+        cout << prompt;
+        cin >> num;
+        if (!cin) {
+            cout << "Invalid input. Enter a number between 0 and 4." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else if (num < 0.0 || num > 4.0) {
+            cout << "Score must be between 0 and 4." << endl;
+        } else {
+            return;
+        }
+    }
+}
+
+
+
+double assignAverage(int numAssigns) {
+    double sum = 0.0;
+    double score = 0.0;
+    for (int i = 1; i <= numAssigns; i++) {
+        readScore("Enter score " + to_string(i) + ": ", score);
+        sum += score;
+        cout << score << endl;
+    }
+    return (numAssigns > 0) ? (sum / numAssigns) : 0.0;
+}
+
+
+  
+
+
+void getInput(double &midtermScore, double &finalExamScore) {
+    readScore("Enter your midterm exam score: ", midtermScore);
+    readScore("Enter your final exam score: ", finalExamScore);
+}
+
+
+double calcFinalScore(double assignAvg, double midterm, double finalExam) {
+    return (assignAvg * ASSIGN_WEIGHT) + (midterm * EXAM_WEIGHT) + (finalExam * EXAM_WEIGHT);
+}
+
+void calcLetterGrade(double finalScore, char &letter) {
+    if (finalScore >= 3.3) letter = 'A';
+    else if (finalScore >= 2.8) letter = 'B';
+    else if (finalScore >= 2.0) letter = 'C';
+    else if (finalScore >= 1.2) letter = 'D';
+    else letter = 'F';
+}
+//A function called void calcLetterGrade(double finalScore, char &letter); 
+//that takes the finalScore by value and a character for the letter grade by reference.
+//Print the letter grade in main().
+
+
+
+
+
+//Letter Grade	4.0 Score	Level
+//A	>=3.3 <= 4.0	Exceeds
+//B	>=2.8 < 3.3	Meets
+//C	>=2.0 < 2.8	Approaching
+//D	>=1.2 < 2.0	Not Yet
+//F	0.0 < 1.2	No Evidence
+
+
+// ------------- DESIGN -------------
+/* 
+Program Name:
+Grade Calculator 
+Program Description:
+using inputs calculate letter grade 
+
+Design:
+A. INPUT
+   int numOfAssignments = 0;
+    double averageAssignmentScore = 0.0;
+    double midterm = 0.0;
+    double finalExam = 0.0;
+  
+B. OUTPUT
+
+double finalScore = 0.0;
+char grade;
+
+
+
+C. CALCULATIONS
+avarage of assignments 
+total final asssignment score 
+catagory of letter grade 
+
+D. LOGIC and ALGORITHMS
+Design the logic of your program using pseudocode or flowcharts. 
+Use conditionals, loops, functions or array constructs.
+List the steps in transforming inputs into outputs. 
+https://github.com/Glen-Sasek-PCC-Instructor/2025-06-22/blob/main/Pseudocode-Reference.txt
+
+
+SAMPLE RUNS
+Copy from assignment document.
+Output:
+
+Welcome to my Final Grade Calculator!
+Please enter the following information and I will calculate your Final Numerical Grade and Letter Grade for you!
+The number of assignments must be between 0 and 10.
+All scores entered must be between 0 and 4.
+Enter the number of assignments (0 to 10): Enter score 1: 3.4
+Enter score 2: 4
+Enter score 3: 2.5
+Enter score 4: 3.3
+Enter score 5: 3.1
+Enter score 6: 2.5
+
+Enter your midterm exam score: Enter your final exam score: Your Final Numeric score is 3.4
+Your Final Grade is A
+Thank you for using my Grade Calculator!
+
+Output:
+
+Welcome to my Final Grade Calculator!
+Please enter the following information and I will calculate your Final Numerical Grade and Letter Grade for you!
+The number of assignments must be between 0 and 10.
+All scores entered must be between 0 and 4.
+Enter the number of assignments (0 to 10): Enter score 1: 3
+Enter score 2: 4
+Enter score 3: 2.5
+
+Enter your midterm exam score: Enter your final exam score: Your Final Numeric score is 2.8
+Your Final Grade is B
+Thank you for using my Grade Calculator!
+
+
+Output:
+
+Welcome to my Final Grade Calculator!
+Please enter the following information and I will calculate your Final Numerical Grade and Letter Grade for you!
+The number of assignments must be between 0 and 10.
+All scores entered must be between 0 and 4.
+Enter the number of assignments (0 to 10): Value must be between 0 and 10.
+Enter the number of assignments (0 to 10): Enter score 1: 3.4
+Enter score 2: 4
+Enter score 3: 2.5
+Enter score 4: Score must be between 0 and 4.
+Enter score 4: 3.5
+Enter score 5: 3.1
+
+Enter your midterm exam score: Enter your final exam score: Your Final Numeric score is 3.5
+Your Final Grade is A
+Thank you for using my Grade Calculator!
+
+*/
