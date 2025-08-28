@@ -1,0 +1,165 @@
+// ------------- FILE HEADER -------------
+// Author: Adam Marquess
+// Assignment: 9
+// Date: 8/28/2025
+// Description: Find Min and Max using Functions
+// Sources: 
+
+
+// ------------- ZYBOOKS SCORES -------------
+// https://learn.zybooks.com/zybook/PCCCS161ASummer25
+// Chapter: 9
+// Participation: 100
+// Challenge:100
+// Labs:100
+
+
+// ------------- DISCORD POSTS -------------
+// https://discord.com/invite/URYKKf8YHm
+// Count:
+// Links (Optional): 
+
+
+// ------------- DESIGN DOCUMENT -------------
+// A. INPUT [yes/no]: yes 
+// B. OUTPUT [yes/no]: yes
+// C. CALCULATIONS [yes/no]: yes
+// D. LOGIC and ALGORITHMS [yes/no]: yes
+//    (Optional) flow chart link or file name: 
+
+
+// ------------- TESTING -------------
+// PASS ALL GIVEN SAMPLE RUN TESTS [yes/no]: yes
+// (Optional) Additional tests count:   
+
+
+// ------------- CODE -------------
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+
+ //prototypes
+ void getInput(int &num);
+ void doStats(int num);
+ void welcome();
+ void goodbye();
+ int getPositiveInt();
+
+ //Write a program that prompts a user for the number of positive integers
+  //(0 is neither positive or negative) they want to enter. 
+  //Use this function prototype for this step: void getInput(int &num); 
+  //This function should not output any error messages - that should be done in main().
+
+
+int main() {
+  
+int IntCount = 0;
+
+
+welcome();
+ 
+    getInput(IntCount);
+
+    if (IntCount <= 0) {
+        cout << "No integers were entered." << endl;
+    } else {
+        doStats(IntCount);
+    }
+
+
+
+goodbye();
+
+  
+
+    return 0;
+}
+
+
+//If the user enters a negative number or 0, print an error, and then prompt for the number again. 
+//Be careful - you will need to adjust the counter variable in the for loop!//weight = readInt("Enter your weight in kilograms: ");
+//  while(weight < 0)
+//    {
+void getInput(int &num){
+    cout << "How many positive integers do you want to process? ";
+    cin >> num;
+}
+
+//Use a for loop to prompt for each number, adding the position number in the prompt.
+//Do not start at position 0! (See sample run ).
+void doStats(int num) {
+    int minVal, maxVal;
+    int minPos = 1, maxPos = 1;
+
+    for (int i = 1; i <= num; i++) {
+        int value;
+        cout << "Enter integer #" << i << ": ";
+        cin >> value;
+
+        // Validation: must be positive
+        while (value <= 0) {
+            cout << "Enter a positive integer!" << endl;
+            cout << "Enter integer #" << i << ": ";
+            cin >> value;
+        }
+
+        // Initialize min/max on first valid input
+        if (i == 1) {
+            minVal = maxVal = value;
+        }
+
+        // Update min
+        if (value < minVal) {
+            minVal = value;
+            minPos = i;
+        }
+
+        // Update max
+        if (value > maxVal) {
+            maxVal = value;
+            maxPos = i;
+        }
+    }
+        cout << "The minimum number entered was " << minVal
+         << " entered in position " << minPos << "." << endl;
+    cout << "The maximum number entered was " << maxVal
+         << " entered in position " << maxPos << "." << endl;
+}
+
+
+//Include a welcome and goodbye message. (See sample run below). Use functions for these.
+void welcome(){
+  cout << "Welcome to my Final Exam Practice." << endl;
+}
+
+void goodbye(){
+  cout << "Thank you for using my program." << endl;
+}
+
+// ------------- DESIGN -------------
+/* 
+Program Name: MIN MAX calculator
+
+Program Description:
+
+Design:
+A. INPUT
+how many positive intergers
+intergers
+
+B. OUTPUT
+find min and max and what position
+
+C. CALCULATIONS
+ there are no calculations.
+
+D. LOGIC and ALGORITHMS
+mostly just loops and if else statments to find and record what is min and what is max and what position
+
+
+SAMPLE RUNS
+Copy from assignment document.
+
+*/
