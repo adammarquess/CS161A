@@ -1,0 +1,158 @@
+// ------------- FILE HEADER -------------
+// Author: Adam Marquess
+// Assignment: FInal 
+// Date: 9/2/25
+// Description: F"Inal Assignment "Miles Tracker"
+// Sources: 
+
+
+// ------------- ZYBOOKS SCORES -------------
+No Zybooks this week
+
+
+// ------------- DISCORD POSTS -------------
+// https://discord.com/invite/URYKKf8YHm
+// Count:
+// Links (Optional): 
+
+
+// ------------- DESIGN DOCUMENT -------------
+// A. INPUT [yes/no]: yes
+// B. OUTPUT [yes/no]:yes
+// C. CALCULATIONS [yes/no]: yes
+// D. LOGIC and ALGORITHMS [yes/no]: yes
+//    (Optional) flow chart link or file name: 
+
+
+// ------------- TESTING -------------
+// PASS ALL GIVEN SAMPLE RUN TESTS [yes/no]: yes
+// (Optional) Additional tests count:   
+
+
+// ------------- CODE -------------
+#include <iostream>
+using namespace std;
+
+// prototypes
+int calcTotal();
+void welcome();
+void goodbye();
+void getInput(int &goal);
+
+
+int main() {
+    int goal = 0;
+    int total = 0;
+
+    welcome();
+
+    getInput(goal);
+
+    if (goal <= 0) {
+        cout << "No miles were tracked this week." << endl;
+    } else {
+        total = calcTotal();
+
+        cout << "You rode " << total << " miles this week." << endl;
+
+        if (total == goal) {
+            cout << "Good job! You met your goal!" << endl;
+       
+        } 
+        else {
+            cout << "You were under your goal by " << (goal - total) << " miles." << endl;
+                
+           
+        }
+    }
+
+    goodbye();
+    return 0;
+}
+
+//welcome message
+void welcome() {
+    cout << "Welcome to my Miles Tracker program." << endl;
+}
+
+//If the user enters 0 or less, print a message that no miles were tracked this week. 
+//The message should be printed in main() and not in the function.
+void getInput(int &goal) {
+    cout << "How many miles do you want to ride this week? " << endl;
+    cin >> goal;
+}
+
+//In this function, use a for loop to prompt for the number of miles ridden each day for a week. 
+//Include the day of the week (Sunday, Monday, etc) in your prompt.
+int calcTotal() {
+    int total = 0;
+    int dailyMiles = 0;
+
+    for (int i = 1; i <= 7; i++) {
+        
+        if (i == 1) cout << "How many miles did you ride on Sunday? " << endl;
+        else if (i == 2) cout << "How many miles did you ride on Monday? "<< endl;
+        else if (i == 3) cout << "How many miles did you ride on Tuesday? "<< endl;
+        else if (i == 4) cout << "How many miles did you ride on Wednesday? "<< endl;
+        else if (i == 5) cout << "How many miles did you ride on Thursday? "<< endl;
+        else if (i == 6) cout << "How many miles did you ride on Friday? "<< endl;
+        else if (i == 7) cout << "How many miles did you ride on Saturday? "<< endl;
+
+        cin >> dailyMiles;
+
+        while (dailyMiles < 0) {
+            cout << "Miles must be 0 or greater!" << endl;
+            
+          
+            if (i == 1) cout << "How many miles did you ride on Sunday? ";
+            else if (i == 2) cout << "How many miles did you ride on Monday? ";
+            else if (i == 3) cout << "How many miles did you ride on Tuesday? ";
+            else if (i == 4) cout << "How many miles did you ride on Wednesday? ";
+            else if (i == 5) cout << "How many miles did you ride on Thursday? ";
+            else if (i == 6) cout << "How many miles did you ride on Friday? ";
+            else if (i == 7) cout << "How many miles did you ride on Saturday? ";
+
+            cin >> dailyMiles;
+        }
+
+        total += dailyMiles;
+    }
+
+    return total;
+}
+
+//goodbye message
+void goodbye() {
+    cout << "Keep riding!!!" << endl;
+}
+
+
+
+// ------------- DESIGN -------------
+/* 
+Program Name: Miles Tracker
+
+Program Description: track miles and compares to goal 
+
+Design:
+A. INPUT
+interger  weekly goal 
+interger daily miles
+
+B. OUTPUT
+total miles 
+if or if not reached goal
+
+C. CALCULATIONS
+just a sum formula to add all the daily miles and compare to goal
+
+D. LOGIC and ALGORITHMS
+while loop , for loop 
+if else for days 
+comparitor for goals to daily miles 
+
+
+SAMPLE RUNS
+Copy from assignment document.
+
+*/
